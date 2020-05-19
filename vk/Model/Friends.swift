@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
  class FriendsResponse: Decodable {
      let response: FriendsArray
