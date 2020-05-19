@@ -8,37 +8,20 @@
 
 import UIKit
 import Foundation
+import RealmSwift
 
 class ResponseGroups: Decodable {
     let response: Items
-    
-    enum CodingKeys: String, CodingKey {
-        case response
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let value = try decoder.container(keyedBy: CodingKeys.self)
-        self.response = try value.decode(Items.self, forKey: .response)
-    }
 }
 
 class Items: Decodable {
     var items: [Groups]
-    
-    enum Keys: String, CodingKey {
-        case items
-    }
-
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        self.items = try container.decode([Groups].self, forKey: .items)
-    }
 }
 
-class Groups: Decodable {
-    var id = 0
-    var name = ""
-    var image = ""
+class Groups: Object, Decodable {
+    @objc dynamic var id = 0
+    @objc dynamic var name = ""
+    @objc dynamic var image = ""
 
     enum GroupsKeys: String, CodingKey {
         case id
@@ -53,4 +36,6 @@ class Groups: Decodable {
         self.name = try value.decode(String.self, forKey: .name)
         self.image = try value.decode(String.self, forKey: .image)
     }
+    
+    required init() {}
 }
