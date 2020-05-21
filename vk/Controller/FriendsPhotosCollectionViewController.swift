@@ -18,11 +18,11 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
    
-        let NS = NetworkService()
+        let networkService = NetworkService()
         let method = "photos.getAll"
         let parametersName = "owner_id"
         let parametersDescription = String(userID)
-        NS.getRequest(
+        networkService.getRequest(
             method: method,
             parametersName: parametersName,
             parametersDescription: parametersDescription,
@@ -65,19 +65,22 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.item]
-        var sizeM = ""
-        photo.sizes.forEach{ size in
-            if size.type == "m" {
-                sizeM = size.image
-            }
-        }
-        let url = URL(string: sizeM)
+//        var sizeM = ""
+//        photo.type.forEach{ size in
+//            if size.type == "m" {
+//                sizeM = size.image
+//            }
+//        }
+        
+        
+        
+        let url = URL(string: photo.urlImage)
         cell.FriendsPhotoImageView.af.setImage(withURL: url!)
  
-        let countsOfLikes = photo.likes.count
+        let countsOfLikes = photo.likesCount
         var isLiked: Bool 
         
-        if photo.likes.isLiked == 0 {
+        if photo.isLiked == 0 {
             isLiked = false
         } else {
             isLiked = true

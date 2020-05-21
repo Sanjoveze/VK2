@@ -27,12 +27,12 @@ class MyFriendsViewController: UITableViewController {
         tableView.register(UINib(nibName: "FriendXibCell", bundle: nil), forCellReuseIdentifier: "FriendXibCell")
         
         // MARK: - Request getAllFriends
-        let NS = NetworkService()
+        let networkService = NetworkService()
         let requestMethod = "friends.get"
         let parametersName = "fields"
         let parametersDescription = "nickname, photo_50"
 
-        NS.getRequest(
+        networkService.getRequest(
             method: requestMethod,
             parametersName: parametersName,
             parametersDescription: parametersDescription,

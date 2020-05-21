@@ -43,11 +43,11 @@ class MyGroupsViewController: UITableViewController {
         sortedGroupDict = sortedArray(array: groups)
 
         // MARK: - RequestUsersGroups
-        let NS = NetworkService()
+        let networkService = NetworkService()
         let method = "groups.get"
         let parametersName = "fields"
         let parametersDescription = "city, members_count"
-        NS.getRequest(
+        networkService.getRequest(
             method: method,
             parametersName: parametersName,
             parametersDescription: parametersDescription,
