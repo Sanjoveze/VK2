@@ -23,6 +23,10 @@ import RealmSwift
      @objc dynamic var lastName = ""
      @objc dynamic var photo = ""
      
+    override static func primaryKey() -> String? {
+         return "userId"
+     }
+    
      enum CodingKeys: String, CodingKey{
          case firstName = "first_name"
          case lastName = "last_name"

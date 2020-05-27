@@ -18,6 +18,7 @@
 		FA15A1312363D0D6000A744C /* FriendsPhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15A1302363D0D6000A744C /* FriendsPhotosCollectionViewController.swift */; };
 		FA15A1332363D100000A744C /* FriendsPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA15A1322363D100000A744C /* FriendsPhotosCell.swift */; };
 		FA195F922383F4D700C7B8C7 /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA195F912383F4D700C7B8C7 /* LikeControl.swift */; };
+		FA1FD5582476995600071C5F /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1FD5572476995600071C5F /* RealmService.swift */; };
 		FA3AD6DF2359AD95007EF38A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD6DE2359AD95007EF38A /* AppDelegate.swift */; };
 		FA3AD6E12359AD95007EF38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD6E02359AD95007EF38A /* SceneDelegate.swift */; };
 		FA3AD6E32359AD95007EF38A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD6E22359AD95007EF38A /* LoginViewController.swift */; };
@@ -53,6 +54,7 @@
 		FA15A1302363D0D6000A744C /* FriendsPhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		FA15A1322363D100000A744C /* FriendsPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPhotosCell.swift; sourceTree = "<group>"; };
 		FA195F912383F4D700C7B8C7 /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
+		FA1FD5572476995600071C5F /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		FA3AD6DB2359AD95007EF38A /* vk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3AD6DE2359AD95007EF38A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3AD6E02359AD95007EF38A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				FAF8B5402393AAF000AF70CC /* CustomNavigationController.swift */,
 				FAF8B5422393AB7A00AF70CC /* CustomPush+PopAnimations.swift */,
 				FA0C7BD6246AC40800E2CCD0 /* NetworkService.swift */,
+				FA1FD5572476995600071C5F /* RealmService.swift */,
 				FA15A13723678183000A744C /* View */,
 				FA15A1362367814C000A744C /* Controller */,
 				FA15A138236781A2000A744C /* Model */,
@@ -333,6 +336,7 @@
 				FAF8B5432393AB7A00AF70CC /* CustomPush+PopAnimations.swift in Sources */,
 				FAF8B5412393AAF000AF70CC /* CustomNavigationController.swift in Sources */,
 				FA15A1312363D0D6000A744C /* FriendsPhotosCollectionViewController.swift in Sources */,
+				FA1FD5582476995600071C5F /* RealmService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

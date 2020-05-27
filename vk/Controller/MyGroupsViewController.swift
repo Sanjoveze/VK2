@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import AlamofireImage
+import RealmSwift
 
 class MyGroupsViewController: UITableViewController {
     
@@ -33,38 +34,20 @@ class MyGroupsViewController: UITableViewController {
     
     var filterGroups = [Groups]()
     var sortedGroupDict: [Character: [Groups]] = [:]
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "GroupXibCell", bundle: nil
         ), forCellReuseIdentifier: "GroupXibCell")
+
+        let realmService = RealmService()
+        realmService.loadGroups(completion: { result in
+            self.groups = result
+        })
         
         sortedGroupDict = sortedArray(array: groups)
-
-        // MARK: - RequestUsersGroups
-        let networkService = NetworkService()
-        let method = "groups.get"
-        let parametersName = "fields"
-        let parametersDescription = "city, members_count"
-        networkService.getRequest(
-            method: method,
-            parametersName: parametersName,
-            parametersDescription: parametersDescription,
-            parse: { data in
-                    try! JSONDecoder().decode(
-                        ResponseGroups.self,
-                        from: data
-                    )
-            },
-            completion: { [weak self] groups in
-                guard let this = self else { return }
-                this.groups = groups.response.items
-                this.sortedGroupDict = this.sortedArray(array: groups.response.items)
-                this.tableView.reloadData()
-        })
+        tableView.reloadData()
     }
-    
     
     func sortedArray(array: [Groups]) -> [Character:[Groups]] {
         var sortDict:[Character:[Groups]] = [:]
@@ -117,41 +100,41 @@ class MyGroupsViewController: UITableViewController {
             
             return cell
     }
- 
+    
     override func tableView(_ tableView: UITableView, commit editingStyle:
         UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-                let firstChar = sortedGroupDict.keys.sorted()[indexPath.section]
+            let firstChar = sortedGroupDict.keys.sorted()[indexPath.section]
             var groups = sortedGroupDict[firstChar]!
-                let group = groups[indexPath.row]
-                
-            let initialSectionsCount = sortedGroupDict.keys.count
-                
-                // MARK: -  добавить удаление при отсортированном списке
+            let group = groups[indexPath.row]
             
-       //         if (searchBar.text ?? "").isEmpty {
-                    groups.removeAll { $0.name == group.name }
-//                } else {
-//                    filterGroups.removeAll { $0.name == group.name }
-//                }
-                
-                if (searchBar.text ?? "").isEmpty  {
-                    filterGroups = groups
-                } else {
-                    filterGroups = groups.filter {
-                        $0.name.lowercased().contains(searchBar.text!.lowercased()) }
-                }
-                
-                sortedGroupDict = sortedArray(array: groups)
-                
-                
-                if initialSectionsCount - sortedGroupDict.count == 0 {
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                } else {
-                    tableView.deleteSections(IndexSet([indexPath.section]), with: .automatic)
-                }
+            let initialSectionsCount = sortedGroupDict.keys.count
+            
+            // MARK: -  добавить удаление при отсортированном списке
+            
+            //         if (searchBar.text ?? "").isEmpty {
+            groups.removeAll { $0.name == group.name }
+            //                } else {
+            //                    filterGroups.removeAll { $0.name == group.name }
+            //                }
+            
+            if (searchBar.text ?? "").isEmpty  {
+                filterGroups = groups
+            } else {
+                filterGroups = groups.filter {
+                    $0.name.lowercased().contains(searchBar.text!.lowercased()) }
             }
+            
+            sortedGroupDict = sortedArray(array: groups)
+            
+            
+            if initialSectionsCount - sortedGroupDict.count == 0 {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.deleteSections(IndexSet([indexPath.section]), with: .automatic)
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

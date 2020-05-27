@@ -11,7 +11,7 @@ import Foundation
 import RealmSwift
 
 class ResponseGroups: Decodable {
-    let response: Items
+    var response: Items
 }
 
 class Items: Decodable {
@@ -23,6 +23,10 @@ class Groups: Object, Decodable {
     @objc dynamic var name = ""
     @objc dynamic var image = ""
 
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
     enum GroupsKeys: String, CodingKey {
         case id
         case name
