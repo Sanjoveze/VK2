@@ -25,30 +25,7 @@ class MyFriendsViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: "FriendXibCell", bundle: nil), forCellReuseIdentifier: "FriendXibCell")
-//
-//        // MARK: - Request getAllFriends
-//        let networkService = NetworkService()
-//        let requestMethod = "friends.get"
-//        let parametersName = "fields"
-//        let parametersDescription = "nickname, photo_50"
-//
-//        networkService.getRequest(
-//            method: requestMethod,
-//            parametersName: parametersName,
-//            parametersDescription: parametersDescription,
-//            parse:  { data in
-//                try! JSONDecoder().decode(
-//                    FriendsResponse.self,
-//                    from: data
-//                )
-//            },
-//            completion: { [weak self] friends in
-//
-//            guard let this = self else { return }
-//            this.friends = friends.response.items
-//                this.sortedFriendsDict = this.sortFriends(friends: friends.response.items)
-//            this.tableView.reloadData()
-//        })
+
         let realmService = RealmService()
         realmService.loadFriends(completion: { result in
             self.friends = result

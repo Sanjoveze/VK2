@@ -24,7 +24,10 @@ class Photos: Object, Decodable {
     @objc dynamic var isLiked = 0
     @objc dynamic var likesCount = 0
     
-
+    override class func primaryKey() -> String? {
+        return "urlImage"
+    }
+    
     enum PhotosKeys: String, CodingKey {
         case ownerId = "owner_id"
         case sizes

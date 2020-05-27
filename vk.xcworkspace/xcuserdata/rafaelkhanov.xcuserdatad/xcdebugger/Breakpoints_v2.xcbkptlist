@@ -7,48 +7,95 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E4968733-420B-4D71-A624-7A8280F1C18A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "vk/Controller/AnimationsController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "AnimationsController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "573E02E8-85F5-44F7-B5B4-682F6DD17924"
+            uuid = "1F50910F-B964-4A62-91CF-8A4656DEA9F3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "vk/RealmService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "saveGroups(groups:)"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "getPhotos(userId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "51BA6C7A-C4B7-4A0B-9429-3C870B5E62E5"
+            uuid = "A151C768-15DF-4BF2-B132-B9B7AF9855B1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "vk/RealmService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "getGroups()"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "getPhotos(userId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A151C768-15DF-4BF2-B132-B9B7AF9855B1 - a3d7abce502c6486"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "vk.RealmService.getPhotos(userId: Swift.Int) -&gt; ()"
+                  moduleName = "vk"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rafaelkhanov/Swift/repo/vk2/VK2/vk/RealmService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
+                  offsetFromSymbolStart = "323">
+               </Location>
+               <Location
+                  uuid = "A151C768-15DF-4BF2-B132-B9B7AF9855B1 - 9fec7a9e9ab72e7c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Foundation.Data) -&gt; vk.ResponsePhoto in vk.RealmService.getPhotos(userId: Swift.Int) -&gt; ()"
+                  moduleName = "vk"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rafaelkhanov/Swift/repo/vk2/VK2/vk/RealmService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
+                  offsetFromSymbolStart = "173">
+               </Location>
+               <Location
+                  uuid = "A151C768-15DF-4BF2-B132-B9B7AF9855B1 - 4e346e501e794a0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (vk.ResponsePhoto) -&gt; () in vk.RealmService.getPhotos(userId: Swift.Int) -&gt; ()"
+                  moduleName = "vk"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rafaelkhanov/Swift/repo/vk2/VK2/vk/RealmService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "112"
+                  endingLineNumber = "112"
+                  offsetFromSymbolStart = "34">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03B4A482-E31D-4745-9DED-D8DD685A41A6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "vk/NetworkService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "getRequest(method:parametersName:parametersDescription:parse:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

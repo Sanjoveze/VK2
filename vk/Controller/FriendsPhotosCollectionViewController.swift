@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import RealmSwift
 
 class FriendsPhotosCollectionViewController: UICollectionViewController {
   
@@ -18,23 +19,36 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
    
-        let networkService = NetworkService()
-        let method = "photos.getAll"
-        let parametersName = "owner_id"
-        let parametersDescription = String(userID)
-        networkService.getRequest(
-            method: method,
-            parametersName: parametersName,
-            parametersDescription: parametersDescription,
-            parse: { data -> ResponsePhoto in
-                try! JSONDecoder().decode(
-                    ResponsePhoto.self,
-                    from: data)
-        }, completion: { [weak self] photos in
-            guard let this = self else { return }
-            this.photos = photos.response.items
-            this.collectionView.reloadData()
-        })
+        let realmService = RealmService()
+        realmService.getPhotos(userId: userID)
+        realmService.loadPhoto(userId: userID){ result in
+            self.photos = result
+            collectionView.reloadData()
+        }
+/*
+         lazy var startOfWeek: Result<ChartCount> = {
+             return realm.objects(ChartCount.self).filter("date = 'startOfWeekDate'")
+         }()
+         
+         */
+        
+//        let networkService = NetworkService()
+//        let method = "photos.getAll"
+//        let parametersName = "owner_id"
+//        let parametersDescription = String(userID)
+//        networkService.getRequest(
+//            method: method,
+//            parametersName: parametersName,
+//            parametersDescription: parametersDescription,
+//            parse: { data -> ResponsePhoto in
+//                try! JSONDecoder().decode(
+//                    ResponsePhoto.self,
+//                    from: data)
+//        }, completion: { [weak self] photos in
+//            guard let this = self else { return }
+//            this.photos = photos.response.items
+//            this.collectionView.reloadData()
+//        })
     }
     
     override func viewWillAppear(_ animated: Bool) {

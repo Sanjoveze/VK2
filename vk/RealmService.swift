@@ -43,7 +43,8 @@ class RealmService {
                 )
         },
             completion: { groups in
-              self.saveGroups(groups: groups.response.items)
+               // guard let this = self else { return }
+                self.saveGroups(groups: groups.response.items)
         })
     }
     
@@ -75,6 +76,7 @@ class RealmService {
                    )
                },
                completion: { friends in
+               // guard let this = self else { return }
                 self.saveFriends(friends: friends.response.items)
            })
     }
@@ -90,4 +92,37 @@ class RealmService {
             print(error)
         }
     }
+    
+    // MARK: - Photos
+    
+    func getPhotos(userId: Int){
+           let method = "photos.getAll"
+           let parametersName = "owner_id"
+           let parametersDescription = String(userId)
+           networkService.getRequest(
+               method: method,
+               parametersName: parametersName,
+               parametersDescription: parametersDescription,
+               parse: { data -> ResponsePhoto in
+                   try! JSONDecoder().decode(
+                       ResponsePhoto.self,
+                       from: data)
+           }, completion: { photos in
+               // guard let this = self else { return }
+            self.savePhotos(photos: photos.response.items)
+           })
+    }
+    
+    func savePhotos(photos: [Photos]){
+        uiRealm.beginWrite()
+        print(uiRealm.configuration.fileURL)
+        uiRealm.add(photos, update: .modified)
+        try! uiRealm.commitWrite()
+    }
+    
+    func loadPhoto(userId: Int, completion:([Photos]) -> ()){
+        let photos = uiRealm.objects(Photos.self).filter("ownerId = \(userId)")
+        completion(Array(photos))
+    }
+    
 }
