@@ -13,6 +13,7 @@ import RealmSwift
 
 class MyGroupsViewController: UITableViewController {
     
+    let realmService = RealmService()
     @IBOutlet weak var searchBar: UISearchBar! {
         didSet {
             searchBar.delegate = self
@@ -24,12 +25,13 @@ class MyGroupsViewController: UITableViewController {
             let group = sourseVC.allGroups[indexPath.row]
             if !groups.contains(where: {$0.name == group.name}) {
                 groups.append(group)
+                realmService.saveGroups(groups: groups)
                 sortedGroupDict = sortedArray(array: groups)
                 tableView.reloadData()
             }
         }
     }
-    
+    var token: NotificationToken?
     var groups = [Groups]()
     
     var filterGroups = [Groups]()
@@ -39,14 +41,26 @@ class MyGroupsViewController: UITableViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "GroupXibCell", bundle: nil
         ), forCellReuseIdentifier: "GroupXibCell")
-
-        let realmService = RealmService()
+        
+        
         realmService.loadGroups(completion: { result in
             self.groups = result
         })
         
         sortedGroupDict = sortedArray(array: groups)
         tableView.reloadData()
+        
+        let observGroups = uiRealm.objects(Groups.self)
+        self.token = observGroups.observe{(changes: RealmCollectionChange) in
+            switch changes {
+            case .initial(let result):
+                print(result)
+            case .update(let result, _, _,_):
+                print(result)
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     func sortedArray(array: [Groups]) -> [Character:[Groups]] {
@@ -105,30 +119,21 @@ class MyGroupsViewController: UITableViewController {
         UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
+        
             let firstChar = sortedGroupDict.keys.sorted()[indexPath.section]
-            var groups = sortedGroupDict[firstChar]!
-            let group = groups[indexPath.row]
+            let sortGroups = sortedGroupDict[firstChar]!
+            let group = sortGroups[indexPath.row]
             
             let initialSectionsCount = sortedGroupDict.keys.count
-            
-            // MARK: -  добавить удаление при отсортированном списке
-            
-            //         if (searchBar.text ?? "").isEmpty {
+
             groups.removeAll { $0.name == group.name }
-            //                } else {
-            //                    filterGroups.removeAll { $0.name == group.name }
-            //                }
-            
-            if (searchBar.text ?? "").isEmpty  {
-                filterGroups = groups
-            } else {
-                filterGroups = groups.filter {
-                    $0.name.lowercased().contains(searchBar.text!.lowercased()) }
-            }
-            
+           
+            uiRealm.beginWrite()
+            uiRealm.delete(group)
+            try! uiRealm.commitWrite()
+
             sortedGroupDict = sortedArray(array: groups)
-            
-            
+
             if initialSectionsCount - sortedGroupDict.count == 0 {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             } else {

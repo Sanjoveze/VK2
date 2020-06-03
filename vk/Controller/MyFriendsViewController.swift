@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import RealmSwift
 
 class MyFriendsViewController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar! {
@@ -15,6 +16,7 @@ class MyFriendsViewController: UITableViewController {
             searchBar.delegate = self
         }
     }
+    var token: NotificationToken?
     
     var friends = [Friends]()
     var sortedFriendsDict = [Character: [Friends]]()
@@ -32,6 +34,18 @@ class MyFriendsViewController: UITableViewController {
         })
         sortedFriendsDict = sortFriends(friends: friends)
         tableView.reloadData()
+        
+        let observFriends = uiRealm.objects(Friends.self)
+        self.token = observFriends.observe{(changes: RealmCollectionChange) in
+            switch changes{
+            case .initial(let result):
+                print(result)
+            case .update(let result,_,_,_):
+                print(result)
+            case .error(let error):
+                print(error)
+            }
+        }
     }
 
     // MARK-- sorted friend list

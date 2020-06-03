@@ -18,7 +18,7 @@ class RealmService {
     
     func saveGroups(groups: [Groups]) {
         do {
-            print(uiRealm.configuration.fileURL)
+            print(uiRealm.configuration.fileURL!)
             uiRealm.beginWrite()
             uiRealm.add(groups, update: .modified)
             try uiRealm.commitWrite()
@@ -42,9 +42,10 @@ class RealmService {
                     from: data
                 )
         },
-            completion: { groups in
-               // guard let this = self else { return }
-                self.saveGroups(groups: groups.response.items)
+            completion: { [weak self] groups in
+                guard let this = self else { return }
+               // uiRealm.delete(groups.response.items)
+                this.saveGroups(groups: groups.response.items)
         })
     }
     
@@ -115,7 +116,7 @@ class RealmService {
     
     func savePhotos(photos: [Photos]){
         uiRealm.beginWrite()
-        print(uiRealm.configuration.fileURL)
+        print(uiRealm.configuration.fileURL!)
         uiRealm.add(photos, update: .modified)
         try! uiRealm.commitWrite()
     }

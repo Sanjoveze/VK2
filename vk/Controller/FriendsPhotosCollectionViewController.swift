@@ -16,6 +16,8 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
     
     var userID = 0
     
+    var token: NotificationToken?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
    
@@ -24,31 +26,19 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
         realmService.loadPhoto(userId: userID){ result in
             self.photos = result
             collectionView.reloadData()
+            
+            let observPhotos = uiRealm.objects(Photos.self)
+            self.token = observPhotos.observe{(changes: RealmCollectionChange)  in
+                switch changes {
+                case .initial(let result):
+                    print(result)
+                case .update(let result, _, _, _):
+                    print(result)
+                case .error(let error):
+                    print(error)
+                }
+            }
         }
-/*
-         lazy var startOfWeek: Result<ChartCount> = {
-             return realm.objects(ChartCount.self).filter("date = 'startOfWeekDate'")
-         }()
-         
-         */
-        
-//        let networkService = NetworkService()
-//        let method = "photos.getAll"
-//        let parametersName = "owner_id"
-//        let parametersDescription = String(userID)
-//        networkService.getRequest(
-//            method: method,
-//            parametersName: parametersName,
-//            parametersDescription: parametersDescription,
-//            parse: { data -> ResponsePhoto in
-//                try! JSONDecoder().decode(
-//                    ResponsePhoto.self,
-//                    from: data)
-//        }, completion: { [weak self] photos in
-//            guard let this = self else { return }
-//            this.photos = photos.response.items
-//            this.collectionView.reloadData()
-//        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
