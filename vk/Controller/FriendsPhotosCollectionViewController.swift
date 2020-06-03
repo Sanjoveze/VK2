@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import RealmSwift
 
 class FriendsPhotosCollectionViewController: UICollectionViewController {
   
@@ -15,26 +16,29 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
     
     var userID = 0
     
+    var token: NotificationToken?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
    
-        let NS = NetworkService()
-        let method = "photos.getAll"
-        let parametersName = "owner_id"
-        let parametersDescription = String(userID)
-        NS.getRequest(
-            method: method,
-            parametersName: parametersName,
-            parametersDescription: parametersDescription,
-            parse: { data -> ResponsePhoto in
-                try! JSONDecoder().decode(
-                    ResponsePhoto.self,
-                    from: data)
-        }, completion: { [weak self] photos in
-            guard let this = self else { return }
-            this.photos = photos.response.items
-            this.collectionView.reloadData()
-        })
+        let realmService = RealmService()
+        realmService.getPhotos(userId: userID)
+        realmService.loadPhoto(userId: userID){ result in
+            self.photos = result
+            collectionView.reloadData()
+            
+            let observPhotos = uiRealm.objects(Photos.self)
+            self.token = observPhotos.observe{(changes: RealmCollectionChange)  in
+                switch changes {
+                case .initial(let result):
+                    print(result)
+                case .update(let result, _, _, _):
+                    print(result)
+                case .error(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,19 +69,22 @@ class FriendsPhotosCollectionViewController: UICollectionViewController {
         }
         
         let photo = photos[indexPath.item]
-        var sizeM = ""
-        photo.sizes.forEach{ size in
-            if size.type == "m" {
-                sizeM = size.image
-            }
-        }
-        let url = URL(string: sizeM)
+//        var sizeM = ""
+//        photo.type.forEach{ size in
+//            if size.type == "m" {
+//                sizeM = size.image
+//            }
+//        }
+        
+        
+        
+        let url = URL(string: photo.urlImage)
         cell.FriendsPhotoImageView.af.setImage(withURL: url!)
  
-        let countsOfLikes = photo.likes.count
+        let countsOfLikes = photo.likesCount
         var isLiked: Bool 
         
-        if photo.likes.isLiked == 0 {
+        if photo.isLiked == 0 {
             isLiked = false
         } else {
             isLiked = true

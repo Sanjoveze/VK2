@@ -10,7 +10,7 @@ import UIKit
 
 class AllGroupsViewController: UITableViewController {
     
-    let NS = NetworkService()
+    let networkService = NetworkService()
   
     
     @IBOutlet weak var searchBar: UISearchBar! {
@@ -64,7 +64,7 @@ extension AllGroupsViewController: UISearchBarDelegate {
             let method = "groups.search"
             let parametersName = "q"
             let parametersDescription = searchText
-            NS.getRequest(
+            networkService.getRequest(
                 method: method,
                 parametersName: parametersName,
                 parametersDescription: parametersDescription,

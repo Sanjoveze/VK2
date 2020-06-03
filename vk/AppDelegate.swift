@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import RealmSwift
+
+let uiRealm = try! Realm()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        Realm.Configuration.defaultConfiguration = config
+    }
 }
 

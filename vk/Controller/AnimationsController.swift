@@ -18,6 +18,9 @@ class AnimationsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let rs = RealmService()
+        rs.getGroups()
+        rs.getFriends()
     }
     
     override func viewDidLayoutSubviews() {

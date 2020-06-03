@@ -11,41 +11,22 @@ import RealmSwift
 
  class FriendsResponse: Decodable {
      let response: FriendsArray
-     
-     enum Keys: String, CodingKey {
-         case response
-     }
-     
-     required init(from decoder: Decoder) throws {
-         let container = try decoder.container(keyedBy: Keys.self)
-         self.response = try container.decode(FriendsArray.self, forKey: .response)
-     }
  }
 
  class FriendsArray: Decodable {
      let items: [Friends]
-     //let count: Int
-
-//     enum Keys: String, CodingKey {
-//         case items
-//       //  case count
-//     }
-//     
-//     required init(from decoder: Decoder) throws {
-//         let container = try decoder.container(keyedBy: Keys.self)
-//         self.items = try container.decode([Friends].self, forKey: .items)
-//        // self.count = try container.decode(Int.self, forKey: .count)
-//     }
-     
-
  }
 
- class Friends: Decodable {
-     var userId = 0
-     var firstName = ""
-     var lastName = ""
-     var photo = ""
+ class Friends: Object, Decodable {
+     @objc dynamic var userId = 0
+     @objc dynamic var firstName = ""
+     @objc dynamic var lastName = ""
+     @objc dynamic var photo = ""
      
+    override static func primaryKey() -> String? {
+         return "userId"
+     }
+    
      enum CodingKeys: String, CodingKey{
          case firstName = "first_name"
          case lastName = "last_name"
@@ -60,6 +41,8 @@ import RealmSwift
          self.lastName = try value.decode(String.self, forKey: .lastName)
          self.photo = try value.decode(String.self, forKey: .photo)
      }
- }
+    
+    required init() {}
+}
 
  

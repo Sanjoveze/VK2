@@ -7,73 +7,58 @@
 //
 
 import Foundation
+import RealmSwift
 
 class ResponsePhoto: Decodable {
     let response: PhotosArrays
-
-    enum ItemsKeys: String, CodingKey {
-        case response
-    }
-
-    required init(from decoder: Decoder) throws {
-        let value = try decoder.container(keyedBy: ItemsKeys.self)
-        self.response = try value.decode(PhotosArrays.self, forKey: .response)
-    }
 }
 
 class PhotosArrays: Decodable {
     var items: [Photos]
-
 }
 
-class Photos: Decodable {
-    var ownerId = 0
-    var sizes: [Sizes]
-    var likes: UserLikes
-
+class Photos: Object, Decodable {
+    @objc dynamic var ownerId = 0
+    @objc dynamic var type = ""
+    @objc dynamic var urlImage = ""
+    @objc dynamic var isLiked = 0
+    @objc dynamic var likesCount = 0
+    
+    override class func primaryKey() -> String? {
+        return "urlImage"
+    }
+    
     enum PhotosKeys: String, CodingKey {
         case ownerId = "owner_id"
         case sizes
         case likes
     }
 
+    enum SizeKeys: String, CodingKey{
+          case type
+          case image = "url"
+      }
+    
+    enum LikesKeys: String, CodingKey {
+          case isLiked = "user_likes"
+          case likesCount = "count"
+      }
+    
     required init(from decoder: Decoder) throws {
         let value = try decoder.container(keyedBy: PhotosKeys.self)
         self.ownerId = try value.decode(Int.self, forKey: .ownerId)
-        self.sizes = try value.decode([Sizes].self, forKey: .sizes)
-        self.likes = try value.decode(UserLikes.self, forKey: .likes)
+        
+        var sizesValue = try value.nestedUnkeyedContainer(forKey: .sizes)
+        
+        let firstSizesValue = try sizesValue.nestedContainer(keyedBy: SizeKeys.self)
+        self.type = try firstSizesValue.decode(String.self, forKey: .type)
+        self.urlImage = try firstSizesValue.decode(String.self, forKey: .image)
+        
+        let likesValue = try value.nestedContainer(keyedBy: LikesKeys.self, forKey: .likes)
+        self.isLiked = try likesValue.decode(Int.self, forKey: .isLiked)
+        self.likesCount = try likesValue.decode(Int.self, forKey: .likesCount)
     }
+    
+    required init() {}
 }
 
-class Sizes: Decodable {
-    var type = ""
-    var image = ""
-
-    enum SizeKeys: String, CodingKey{
-        case type
-        case image = "url"
-    }
-
-    required init(from decoder: Decoder) throws {
-
-        let value = try decoder.container(keyedBy: SizeKeys.self)
-        self.type = try value.decode(String.self, forKey: .type)
-        self.image = try value.decode(String.self, forKey: .image)
-
-    }
-}
-
-class UserLikes: Decodable {
-    var isLiked = 0
-    var count = 0
-
-    enum LikesKeys: String, CodingKey {
-        case isLiked = "user_likes"
-        case count
-    }
-    required init(from decoder: Decoder) throws {
-        let value = try decoder.container(keyedBy: LikesKeys.self)
-        self.isLiked = try value.decode(Int.self, forKey: .isLiked)
-        self.count = try value.decode(Int.self, forKey: .count)
-    }
-}
